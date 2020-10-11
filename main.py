@@ -1,36 +1,48 @@
-import board
+import world 
 import rules
 import gui
 import random
 import time
 from patterns import *
 
-def main(nrows, ncols, nticks, max_alives):
-  px_width = 2 
+def main(nrows, ncols, px_width):
   display = gui.Gui(nrows, ncols, px_width)
 
-  boards = [board.Board(nrows, ncols), board.Board(nrows, ncols)]
-  curr_idx = 0
-  load_rand_pattern(boards[curr_idx], 500)
-  display.update(boards[curr_idx])
-  input("Press any key to start to the game.")
+  worlds = [world.World(nrows, ncols), world.World(nrows, ncols)]
+  curr_world = worlds[0]
+  nxt_world = worlds[1]
+  max_alives = int((nrows * ncols) / 5)
+  load_rand_pattern(curr_world, max_alives)
+  #load_glider(curr_world)
+  display.update(curr_world)
 
-  for t in range(nticks):
-    nxt_idx = (curr_idx + 1) % 2
+  nticks = 0
+  while 1:
+    run_tick(curr_world, nxt_world)
+    if curr_world == nxt_world:
+      print("World is dead!!")
+      break
+    display.update(nxt_world)
+    curr_world, nxt_world = nxt_world, curr_world
+    time.sleep(0.1)
+    nticks += 1
+    if nticks % 100 == 0:
+      print("++Finished Tick=", nticks)
 
-    for i in range(nrows):
-      for j in range(ncols):
-        if rules.get_next_cell_state(boards[curr_idx], i, j) == 1:
-          boards[nxt_idx].set_alive(i, j)
+  print(">>Ran the sim for ticks=" + str(nticks))
+
+def run_tick(world, nxt_world):
+  """Run a single tick and update the new world."""
+  for i in range(world.rows):
+    for j in range(world.cols):
+        if rules.get_next_cell_state(world, i, j) == 1:
+          nxt_world.set_alive(i, j)
         else:
-          boards[nxt_idx].set_dead(i, j)
-  
-    display.update(boards[nxt_idx])
-    curr_idx = nxt_idx
-    time.sleep(1)
+          nxt_world.set_dead(i, j)
+
 
 if __name__ == "__main__":
   print("Running Conway Game Of Life")
-  main(512, 512, 1000, 100)
+  main(nrows=100, ncols=100, px_width=5)
 
 

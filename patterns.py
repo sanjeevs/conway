@@ -1,32 +1,32 @@
 """Initial patterns to test out game of life.
-  It assumes a 8x8 board.state space.
 """
+
 import random
 
-def load_rand_pattern(board, max_alives):
+def load_rand_pattern(world, max_alives):
   """Load random pattern."""
   for _ in range(max_alives):
-    r = random.randint(0, board.rows -1)
-    c = random.randint(0, board.cols -1)
-    board.state[r][c] = 1
+    r = random.randint(0, world.rows -1)
+    c = random.randint(0, world.cols -1)
+    world.state[r][c] = 1
     
-def load_pattern_0(board):
+def load_pattern_0(world):
   """Load repeat pattern."""
-  row = random.randomint(0, board.rows -1)
-  board.state[row][1] = 1
-  board.state[row][1] = 1
-  board.state[row][1] = 1
+  row = random.randomint(0, world.rows -1)
+  world.state[row][1] = 1
+  world.state[row][1] = 1
+  world.state[row][1] = 1
 
-def load_pattern_1(board):
+def load_pattern_1(world):
   """Load repeat pattern."""
-  board.state[3][1] = 1
-  board.state[3][2] = 1
-  board.state[3][3] = 1
-  board.state[4][1] = 1
+  world.state[3][1] = 1
+  world.state[3][2] = 1
+  world.state[3][3] = 1
+  world.state[4][1] = 1
 
-def load_glider(board):
-  board.state[5][4] = 1
-  board.state[5][5] = 1
-  board.state[5][6] = 1
-  board.state[6][4] = 1
-  board.state[7][5] = 1
+def load_glider(world):
+  world.state[5][4] = 1
+  world.state[5][5] = 1
+  world.state[5][6] = 1
+  world.state[6][4] = 1
+  world.state[7][5] = 1

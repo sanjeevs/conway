@@ -1,21 +1,21 @@
 import unittest
-import board
+import world 
 
-class TestBoard(unittest.TestCase):
+class TestWorld(unittest.TestCase):
   def setUp(self):
-    self.b1 = board.Board(3,4)
+    self.b1 = world.World(3,4)
 
   def test_out_of_bounds(self):
-    self.assertTrue(self.b1.is_valid(0, 0))
-    self.assertTrue(self.b1.is_valid(2, 3))
-    self.assertFalse(self.b1.is_valid(3, 0))
-    self.assertFalse(self.b1.is_valid(0, 4))
+    self.assertTrue(self.b1.is_valid_idx(0, 0))
+    self.assertTrue(self.b1.is_valid_idx(2, 3))
+    self.assertFalse(self.b1.is_valid_idx(3, 0))
+    self.assertFalse(self.b1.is_valid_idx(0, 4))
   
   def test_negative_bounds(self):
-    self.assertTrue(self.b1.is_valid(0, 0))
-    self.assertFalse(self.b1.is_valid(-1, 0))
-    self.assertFalse(self.b1.is_valid(1, -1))
-    self.assertFalse(self.b1.is_valid(-1, -1))
+    self.assertTrue(self.b1.is_valid_idx(0, 0))
+    self.assertFalse(self.b1.is_valid_idx(-1, 0))
+    self.assertFalse(self.b1.is_valid_idx(1, -1))
+    self.assertFalse(self.b1.is_valid_idx(-1, -1))
 
   def test_is_alive(self):
     self.assertFalse(self.b1.is_alive(0, 0))
